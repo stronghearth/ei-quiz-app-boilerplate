@@ -5,24 +5,40 @@ const store = {
   // 5 or more questions are required
   questions: [
     {
-      question: 'What color is broccoli?',
+      question: 'Which of these is the correct lyric from Africa by Toto?',
       answers: [
-        'red',
-        'orange',
-        'pink',
-        'green'
+        'I left my brains down in Africa',
+        'I miss the rains down in Africa',
+        'I bless the rains down in Africa',
       ],
-      correctAnswer: 'green'
+      correctAnswer: 'I bless the rains down in Africa'
     },
     {
-      question: 'What is the current year?',
+      question: 'Which of these is the correct lyric from Dancing Queen by ABBA?',
       answers: [
-        '1970',
-        '2015',
-        '2019',
-        '2005'
+        'See that girl, watch her scream, kicking the dancing queen',
+        'See that girl, watch that scene, digging the dancing queen',
+        'See that girl, watch that tween, digging the dancing queen',
       ],
-      correctAnswer: '2019'
+      correctAnswer: 'See that girl, watch that scene, digging the dancing queen'
+    }
+    {
+      question: 'Which of these is the correct lyric from Bad Moon Rising by Creedence Clearwater Revival?',
+      answers: [
+        'There\'s a bathroom on the right',
+        'There\'s a bad moon on the rise',
+        'There\'s a trap room, turn on the light'
+      ],
+      correctAnswer: 'There\'s a bad moon on the rise',
+    }
+    {
+      question: 'Which of these is the correct lyric from Blinded by the Light by Munford Man\'s Earth Band?',
+      answers: [
+        'Held up like a loofah, another farmer of the night',
+        'Wrapped up like a truce, another roller in the night',
+        'Revved up like a deuce, another runner in the night',
+      ],
+      correctAnswer: 'Revved up like a deuce, another runner in the night',
     }
   ],
   questionNumber: 0,
