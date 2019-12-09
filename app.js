@@ -1,5 +1,5 @@
 
-const store = {
+const STORE = {
   questions: [
     {
       question: 'Which of these is the correct lyric from Africa by Toto?',
@@ -18,7 +18,7 @@ const store = {
         'See that girl, watch that tween, digging the dancing queen',
       ],
       correctAnswer: 'See that girl, watch that scene, digging the dancing queen'
-    }
+    },
     {
       question: 'Which of these is the correct lyric from Bad Moon Rising by Creedence Clearwater Revival?',
       answers: [
@@ -27,7 +27,7 @@ const store = {
         'There\'s a trap room, turn on the light'
       ],
       correctAnswer: 'There\'s a bad moon on the rise',
-    }
+    },
     {
       question: 'Which of these is the correct lyric from Blinded by the Light by Munford Man\'s Earth Band?',
       answers: [
@@ -55,3 +55,20 @@ const store = {
  *
  */
 
+ function handleStartButton () {
+ //listens for when start button is clicked, looks for first question and runs generateAnswerChoices to show first Q
+ }
+
+ function handleChoiceSumbit () {
+ //listens for when option is selected and submit button is clicked, loads appropriate correct/incorrect content, tallies up score, tallies up question
+ }
+
+function generateAnswerChoices (answers) {
+//generates appropriate html and incorporates styles, called by other functions when STORE updates
+}
+
+function handleRestart () {
+//listens for when last page is loaded and the restart button is selected, loads landing pg
+}
+
+$(handleChoiceSumbit);
