@@ -55,20 +55,35 @@ const STORE = {
  *
  */
 
- function handleStartButton () {
- //listens for when start button is clicked, looks for first question and runs generateAnswerChoices to show first Q
+function handleStartButton () {
+  //listens for when start button is clicked, looks for first question and runs generateAnswerChoices to show first Q
+  $('main').on('click', '.js-start-quiz', event => {
+      let htmlString = generateAnswerChoices();
+      $('main').html(htmlString);
+  });
+  console.log ('yay your handlestartfunction function is a function!');
  }
 
- function handleChoiceSumbit () {
- //listens for when option is selected and submit button is clicked, loads appropriate correct/incorrect content, tallies up score, tallies up question
+function handleChoiceSumbit () {
+  //listens for when option is selected and submit button is clicked, loads appropriate correct/incorrect content, tallies up score, tallies up question
+  console.log ('yay your handlechoicesubmit function is a function!');
  }
 
 function generateAnswerChoices (answers) {
-//generates appropriate html and incorporates styles, called by other functions when STORE updates
+  //generates appropriate html and incorporates styles, called by other functions when STORE updates
+  
+  console.log ('yay your generateanswerchoices function is a function!');
 }
 
 function handleRestart () {
-//listens for when last page is loaded and the restart button is selected, loads landing pg
+  //listens for when last page is loaded and the restart button is selected, loads landing pg
+  console.log ('yay your handlerestart function is a function!');
 }
 
-$(handleChoiceSumbit);
+function checkAllTheFunctions () {
+  handleStartButton();
+  handleChoiceSumbit();
+  handleRestart();
+}
+
+$(checkAllTheFunctions);

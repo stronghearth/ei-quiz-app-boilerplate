@@ -6,3 +6,23 @@
   * https://github.com/andreacardybailey/responsive_example/blob/master/styles/responsive-base.css 
   *
 */
+
+* {
+  box-sizing: border-box;
+}
+
+main {
+  background-color: lightgray;
+  padding: 25px;
+  border-radius: 5px;
+}
+
+header.quiztitle {
+  text-align: center;
+}
+
+section.submitbutton {
+  text-align: center;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
