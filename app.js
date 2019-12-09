@@ -1,8 +1,5 @@
-/**
- * Example store structure
- */
+
 const store = {
-  // 5 or more questions are required
   questions: [
     {
       question: 'Which of these is the correct lyric from Africa by Toto?',
@@ -16,8 +13,8 @@ const store = {
     {
       question: 'Which of these is the correct lyric from Dancing Queen by ABBA?',
       answers: [
-        'See that girl, watch her scream, kicking the dancing queen',
         'See that girl, watch that scene, digging the dancing queen',
+        'See that girl, watch her scream, kicking the dancing queen',
         'See that girl, watch that tween, digging the dancing queen',
       ],
       correctAnswer: 'See that girl, watch that scene, digging the dancing queen'
@@ -57,3 +54,4 @@ const store = {
  * You may add attributes (classes, ids, etc) to the existing HTML elements, or link stylesheets or additional scripts if necessary
  *
  */
+
