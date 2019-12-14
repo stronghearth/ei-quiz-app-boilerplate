@@ -81,37 +81,79 @@ function handleStartButton () {
 
 function handleChoiceSumbit () {
   //listens for when option is selected and submit button is clicked, loads appropriate correct/incorrect content, tallies up score, tallies up question
-  $('form').on('submit', '.js-answer-submit', event => {
+
+  $('form').on('submit', '.js-question-set', event => {
     event.preventDefault();
+    if ($('input:selected').val() === STORE.questions[STORE.questionNumber].correctAnswer) {
+        let htmlCorrect = generatePositiveFeedback();
+        $('main').html(htmlCorrect);
+        STORE.score++;
+    }
+    else {
+       let htmlIncorrect = generateNegativeFeedback();
+       $('main').html(htmlIncorrect);
+    }
+
     
-    generateAnswerChoices();
-  })
-  console.log ('yay your handlechoicesubmit function is a function!');
+    //STORE.questionNumber++;
+
+    //generateAnswerChoices();
+  });
+  console.log('handleChoiceSubmit run');
  }
 
 function generateAnswerChoices (answers) {
   //generates appropriate html and incorporates styles, called by other functions when STORE updates
-  const questionString = 
-    `<p class="currentScore">Current Score: ${} out of 5 Correct</p>
+  console.log ('yay your generateanswerchoices function is a function!');
+  return `<p class="currentScore">Current Score: ${STORE.score} out of 5 Correct</p>
       <section class= "albumArt">
-          ${}
+          ${STORE.questions[STORE.questionNumber].album}
       </section>
       <section>
-          <form action="/some-server-endpoint" method="GET">
+          <form id="question-set js-question-set" action="/endpoint" method="GET">
           <fieldset class="questionbox">
-              <legend>${}</legend>
-              <input type="radio" name="option" id="option" required>${}<br>
-              <input type="radio" name="option" id="option" required>${}<br>
-              <input type="radio" name="option" id="option" required>${}<br>
+              <legend>${STORE.questions[STORE.questionNumber].question}</legend>
+              <input type="radio" name="option" id="option1" value="${STORE.questions[STORE.questionNumber].answers[0]}" required>${STORE.questions[STORE.questionNumber].answers[0]}<br>
+              <input type="radio" name="option" id="option2" value="${STORE.questions[STORE.questionNumber].answers[1]}" required>${STORE.questions[STORE.questionNumber].answers[1]}<br>
+              <input type="radio" name="option" id="option3" value="${STORE.questions[STORE.questionNumber].answers[2]}" required>${STORE.questions[STORE.questionNumber].answers[2]}<br>
           </fieldset>
           <button type="submit" class="js-answer-submit">Submit</button>
           </form>
       </section>
       <section class="questionCount">
-          <p>Question ${} out of 5</p>
+          <p>Question ${STORE.questionNumber+1} out of 5</p>
       </section>`;
   
-  console.log ('yay your generateanswerchoices function is a function!');
+  
+}
+
+function generatePositiveFeedback () {
+  console.log('hey you got it right!');
+  return   `<section class="correctResult">
+      <h2>Correct!</h2>
+  </section>
+  <section class="answerReult">
+    <p class="currentScore">Current Score: ${STORE.score} out of 5 Correct</p>
+  </section>
+  <section class="submitbutton">
+      <button type="submit">Next Question</button>
+  </section>`;
+}
+
+function generateNegativeFeedback () {
+  console.log('whoops the answer was wrong')
+  return `<section class="wrongResult">
+            <h2>Sorry, that was incorrect.</h2>
+          </section>
+          <section class="correctResult">
+            <p>The correct answer was ${STORE.questions[STORE.questionNumber].correctAnswer}.</p>
+          </section>
+          <section class="answerResult">
+              <p class="currentScore">Current Score: ${STORE.score} out of 5 Correct</p>
+          </section>
+          <section class="submitbutton">
+            <button type="submit">Next Question</button>
+          </section>`;
 }
 
 function handleRestart () {
@@ -119,10 +161,10 @@ function handleRestart () {
   console.log ('yay your handlerestart function is a function!');
 }
 
-function checkAllTheFunctions () {
+function runTheQuiz () {
   handleStartButton();
   handleChoiceSumbit();
   handleRestart();
 }
 
-$(checkAllTheFunctions);
+$(runTheQuiz);
