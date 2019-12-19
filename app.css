@@ -10,6 +10,9 @@ p, form {
   font-family: 'Open Sans', sans-serif;
 }
 
+a:not(.default):link    { color: #000000; }
+a:not(.default):visited { color: #000000; }
+
 body {
   display: flex;
   flex-direction: column;
@@ -18,7 +21,7 @@ body {
 }
 
 main {
-  background-color: lightgray;
+  background-color: #D3D3D3;
   padding: 25px;
   border-radius: 5px;
   max-width: 90%;
@@ -34,14 +37,30 @@ header.quiztitle {
 }
 
 .albumArt {
-  border-color: black;
+  border-color: #000000;
   border-style: solid;
+}
+
+form {
+  margin-top: 10px;
 }
 
 section.submitbutton {
   text-align: center;
   margin-top: 25px;
   margin-bottom: 25px;
+}
+p.correctAnswer {
+  font-style: italic;
+}
+
+button.youtubeLink {
+  background-color: inherit;
+  border-style: none;
+}
+
+.fa-youtube {
+  color: #FF0000;
 }
 
 @media screen and (max-width: 320px) {
@@ -50,9 +69,6 @@ section.submitbutton {
     flex-direction: column;
     justify-content: center;
     align-content: center;
-  }
-  p.currentScore {
-    text-align: center;
   }
   .albumArt {
     max-width: 100%;
@@ -65,5 +81,60 @@ section.submitbutton {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+  }
+  h2.congrats {
+    text-align: left;
+  }
+  h2, p.currentScore, .questionCount {
+    text-align: center;
+  }
+  h2.congrats {
+
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .startMenu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .adjustScoreAlbum {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  p.currentScore {
+    display: flex;
+    align-self: flex-start;
+    text-align: center;
+  }
+  .albumArt {
+    display: flex;
+  }
+  form {
+    margin-left: 10px;
+  }
+  .adjustText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .correctResult, .wrongResult {
+    text-align: center;
+  }
+  .congratsText {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .videoEmbed {
+    display: flex;
+    align-self: flex-end;
   }
 }

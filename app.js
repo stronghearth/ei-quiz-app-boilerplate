@@ -59,21 +59,23 @@ const STORE = {
 };
 
 const welcomeScreen = function () {
-  return `<section>
+  return `<section class="startMenu">
   <p>A lot of songs are made infamous by a misheard lyric. Take this quiz to see if you can tell the real lyrics from the misheard ones!</p>
-  </section>
   <section class="submitbutton">
   <button type="submit" class="js-start-quiz">Start</button>
+  </section>
   </section>`
 };
 
 const generateQuestion = function (num) {
-  return `<p class="currentScore">Current Score: ${STORE.score} out of 5 Correct</p>
+  return `<section class="adjustScoreAlbum">
+  <p class="currentScore adjustText">Current Score: ${STORE.score} out of 5 Correct</p>
       <section class= "albumArt">
           ${STORE.questions[STORE.questionNumber].album}
       </section>
-      <section>
-          <form id="question-set" class="js-question-set" action="/endpoint" method="GET">
+      </section>
+      <section class="adjustText">
+          <form id="question-set" class="adjustText js-question-set" action="/endpoint" method="GET">
           <fieldset class="questionbox">
               <legend>${STORE.questions[STORE.questionNumber].question}</legend>
               <input type="radio" name="option" id="option1" value="${STORE.questions[STORE.questionNumber].answers[0]}" required>${STORE.questions[STORE.questionNumber].answers[0]}<br>
@@ -82,14 +84,15 @@ const generateQuestion = function (num) {
           </fieldset>
           <button type="submit" class="js-answer-submit">Submit</button>
           </form>
-      </section>
       <section class="questionCount">
           <p>Question ${STORE.questionNumber+1} out of 5</p>
+      </section>
       </section>`;
 };
 
 const generatePositiveFeedback = function() {
-  return `<section class="correctResult">
+  return `<section class="positiveFeedback">
+          <section class="correctResult">
             <h2>Correct!</h2>
           </section>
           <section class="answerReult">
@@ -97,32 +100,39 @@ const generatePositiveFeedback = function() {
           </section>
           <section class="submitbutton">
               <button type="submit" class="js-next">Next Question</button>
+          </section>
           </section>`;
 };
 
 const generateNegativeFeedback = function () {
-  return `<section class="wrongResult">
-            <h2>Sorry, that was incorrect.</h2>
+  return `<section class="negativeFeedback">
+          <section class="wrongResult">
+            <h2 class="myApologies">Sorry, that was incorrect.</h2>
           </section>
           <section class="correctResult">
-            <p>The correct answer was ${STORE.questions[STORE.questionNumber].correctAnswer}.</p>
+            <p>The correct answer was:</p>
+             <p class="correctAnswer">${STORE.questions[STORE.questionNumber].correctAnswer}.</p>
           </section>
           <section class="answerResult">
-              <p class="currentScore">Current Score: ${STORE.score} out of 5 Correct</p>
+              <p class="currentScore alignScore">Current Score: ${STORE.score} out of 5 Correct</p>
           </section>
           <section class="submitbutton">
             <button type="submit" class="js-next">Next Question</button>
+          </section>
           </section>`;
 };
 
 const endScreen = function () {
-  return `<section>
-              <h2>Congratulations, you've completed the quiz!</h2>
+  return `<section class="congratsText">
+              <h2 class="congrats">Congratulations, you've completed the quiz!</h2>
               <h3>Final Score ${STORE.score} out of 5 correct</h3>
-              <p>This quiz was loosely based on Watch Mojo video...</p>
+              <p>This quiz was loosely based on Watch Mojo video! Click on the YouTube icon to see their Top Ten Misheard Lyrics video.</p>
            </section>
           <section class="videoembed">
-              <p>...Embeded video goes here...</p>
+              <button type="submit" class="btn youtubeLink">
+              <a href='https://www.youtube.com/watch?v=VZhxLjDLu6Y' target="_blank">
+              <i class="fab fa-youtube fa-2x"></i></a>
+              </button>
           </section>
           <section class="submitbutton">
               <button type="submit" class="js-restart">Restart Quiz</button>
