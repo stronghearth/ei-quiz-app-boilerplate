@@ -53,7 +53,9 @@ const STORE = {
     }
   ],
   questionNumber: 0,
-  score: 0
+  score: 0,
+  quizState: 'start',
+  /* quiz state will be set by event listeners and render will check this variable to see which set of html to load onto the DOM*/
 };
 
 /**
@@ -69,48 +71,22 @@ const STORE = {
  *
  */
 
-function handleStartButton () {
-  //listens for when start button is clicked, looks for first question and runs generateAnswerChoices to show first Q
-  $('main').on('click', '.js-start-quiz', event => {
-      event.preventDefault();
-      let htmlString = generateAnswerChoices();
-      $('main').html(htmlString);
-  });
-  console.log ('yay your handlestartfunction function is a function!');
- }
+const welcomeScreen = function () {
+  return `<section>
+  <p>A lot of songs are made infamous by a misheard lyric. Take this quiz to see if you can tell the real lyrics from the misheard ones!</p>
+  </section>
+  <section class="submitbutton">
+  <button type="submit" class="js-start-quiz">Start</button>
+  </section>`
+}
 
-function handleChoiceSumbit () {
-  //listens for when option is selected and submit button is clicked, loads appropriate correct/incorrect content, tallies up score, tallies up question
-
-  $('form').on('submit', '.js-question-set', event => {
-    event.preventDefault();
-    if ($('input:selected').val() === STORE.questions[STORE.questionNumber].correctAnswer) {
-        let htmlCorrect = generatePositiveFeedback();
-        $('main').html(htmlCorrect);
-        STORE.score++;
-    }
-    else {
-       let htmlIncorrect = generateNegativeFeedback();
-       $('main').html(htmlIncorrect);
-    }
-
-    
-    //STORE.questionNumber++;
-
-    //generateAnswerChoices();
-  });
-  console.log('handleChoiceSubmit run');
- }
-
-function generateAnswerChoices (answers) {
-  //generates appropriate html and incorporates styles, called by other functions when STORE updates
-  console.log ('yay your generateanswerchoices function is a function!');
+const generateQuestion = function (num) {
   return `<p class="currentScore">Current Score: ${STORE.score} out of 5 Correct</p>
       <section class= "albumArt">
           ${STORE.questions[STORE.questionNumber].album}
       </section>
       <section>
-          <form id="question-set js-question-set" action="/endpoint" method="GET">
+          <form id="question-set" class="js-question-set" action="/endpoint" method="GET">
           <fieldset class="questionbox">
               <legend>${STORE.questions[STORE.questionNumber].question}</legend>
               <input type="radio" name="option" id="option1" value="${STORE.questions[STORE.questionNumber].answers[0]}" required>${STORE.questions[STORE.questionNumber].answers[0]}<br>
@@ -123,24 +99,22 @@ function generateAnswerChoices (answers) {
       <section class="questionCount">
           <p>Question ${STORE.questionNumber+1} out of 5</p>
       </section>`;
-  
-  
 }
 
-function generatePositiveFeedback () {
+const generatePositiveFeedback = function() {
   console.log('hey you got it right!');
-  return   `<section class="correctResult">
-      <h2>Correct!</h2>
-  </section>
-  <section class="answerReult">
-    <p class="currentScore">Current Score: ${STORE.score} out of 5 Correct</p>
-  </section>
-  <section class="submitbutton">
-      <button type="submit">Next Question</button>
-  </section>`;
+  return `<section class="correctResult">
+            <h2>Correct!</h2>
+           </section>
+          <section class="answerReult">
+            <p class="currentScore">Current Score: ${STORE.score} out of 5 Correct</p>
+          </section>
+          <section class="submitbutton">
+              <button type="submit" class="js-next">Next Question</button>
+          </section>`;
 }
 
-function generateNegativeFeedback () {
+const generateNegativeFeedback = function () {
   console.log('whoops the answer was wrong')
   return `<section class="wrongResult">
             <h2>Sorry, that was incorrect.</h2>
@@ -152,19 +126,115 @@ function generateNegativeFeedback () {
               <p class="currentScore">Current Score: ${STORE.score} out of 5 Correct</p>
           </section>
           <section class="submitbutton">
-            <button type="submit">Next Question</button>
+            <button type="submit" class="js-next">Next Question</button>
           </section>`;
+}
+
+const endScreen = function () {
+  console.log('the end is ny');
+  return `<section>
+              <h2>Congratulations, you've completed the quiz!</h2>
+              <h3>Final Score ${STORE.score} out of 5 correct</h3>
+              <p>This quiz was loosely based on Watch Mojo video...</p>
+           </section>
+          <section class="videoembed">
+              <p>...Embeded video goes here...</p>
+          </section>
+          <section class="submitbutton">
+              <button type="submit" class="js-restart">Restart Quiz</button>
+          </section>`
+}
+
+function handleStartButton () {
+  //listens for when start button is clicked, looks for first question and runs generateAnswerChoices to show first Q
+  $('main').on('click', '.js-start-quiz', event => {
+      event.preventDefault();
+      STORE.quizState = 'question';
+      renderQuiz();
+  });
+  console.log ('yay your handlestartfunction function is a function!');
+ }
+
+function handleChoiceSumbit () {
+  //listens for when option is selected and submit button is clicked, loads appropriate correct/incorrect content, tallies up score
+  $('main').on('submit', '.js-question-set', event => {
+    event.preventDefault();
+    if ($('input[name=option]:checked').val() === STORE.questions[STORE.questionNumber].correctAnswer) {
+        STORE.score++;
+        STORE.quizState = 'correct';
+        console.log(STORE.quizState)
+        renderQuiz();
+    }
+    else {
+      STORE.quizState = 'incorrect';
+      console.log(STORE.quizState);
+      renderQuiz();
+    }
+    })
+  
+ }
+
+function handleNextButton () {
+  //listens for when next button is clicked on the correct/incorrect states, changes question number, changes state back to question
+  $('main').on('click', '.js-next', event => {
+    event.preventDefault();
+    STORE.questionNumber++;
+    console.log(STORE.questionNumber);
+    if (STORE.questionNumber === STORE.questions.length) {
+      STORE.quizState = 'end';
+      console.log(STORE.quizState);
+      renderQuiz();
+    }
+    else {
+      STORE.quizState = 'question';
+      console.log(STORE.quizState);
+      renderQuiz(); 
+    }
+  });
 }
 
 function handleRestart () {
   //listens for when last page is loaded and the restart button is selected, loads landing pg
+  $('main').on('click', '.js-restart', event => {
+    event.preventDefault();
+    STORE.questionNumber = 0;
+    STORE.score = 0;
+    STORE.quizState = 'start';
+    renderQuiz();
+  })
   console.log ('yay your handlerestart function is a function!');
 }
+
+function renderQuiz () {
+  if (STORE.quizState === 'end') {
+    const quizEnd = endScreen();
+    $('main').html(quizEnd);
+  } 
+  else if (STORE.quizState === 'start') {
+      const begin = welcomeScreen();
+        $('main').html(begin);
+  }
+  else if (STORE.quizState === 'question') {
+      const currentQuestion = generateQuestion(STORE.questions[STORE.questionNumber]);
+      $('main').html(currentQuestion);
+  }
+  else if (STORE.quizState === 'correct') {
+      const correctResult = generatePositiveFeedback();
+      $('main').html(correctResult);
+  }
+  else if (STORE.quizState === 'incorrect') {
+      const incorrectResult = generateNegativeFeedback();
+      $('main').html(incorrectResult);
+  }
+};
+  
 
 function runTheQuiz () {
   handleStartButton();
   handleChoiceSumbit();
+  handleNextButton();
   handleRestart();
+  renderQuiz();
 }
 
 $(runTheQuiz);

@@ -1,21 +1,23 @@
-/* Your styles should be mobile-first and responsive */
-
-/** 
-  * If you are unclear on how to utilize a mobile-first, responsive technique to write your CSS, here is an example: 
-  *
-  * https://github.com/andreacardybailey/responsive_example/blob/master/styles/responsive-base.css 
-  *
-*/
-
 * {
   box-sizing: border-box;
   font-family: 'PT Sans', sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 main {
   background-color: lightgray;
   padding: 25px;
   border-radius: 5px;
+  max-width: 85%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 header.quiztitle {
