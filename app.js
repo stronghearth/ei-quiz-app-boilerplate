@@ -58,19 +58,6 @@ const STORE = {
   /* quiz state will be set by event listeners and render will check this variable to see which set of html to load onto the DOM*/
 };
 
-/**
- *
- * Your app should include a render() function, that regenerates
- * the view each time the store is updated. See your course
- * material, consult your instructor, and reference the slides
- * for more details.
- *
- * NO additional HTML elements should be added to the index.html file.
- *
- * You may add attributes (classes, ids, etc) to the existing HTML elements, or link stylesheets or additional scripts if necessary
- *
- */
-
 const welcomeScreen = function () {
   return `<section>
   <p>A lot of songs are made infamous by a misheard lyric. Take this quiz to see if you can tell the real lyrics from the misheard ones!</p>
@@ -78,7 +65,7 @@ const welcomeScreen = function () {
   <section class="submitbutton">
   <button type="submit" class="js-start-quiz">Start</button>
   </section>`
-}
+};
 
 const generateQuestion = function (num) {
   return `<p class="currentScore">Current Score: ${STORE.score} out of 5 Correct</p>
@@ -99,23 +86,21 @@ const generateQuestion = function (num) {
       <section class="questionCount">
           <p>Question ${STORE.questionNumber+1} out of 5</p>
       </section>`;
-}
+};
 
 const generatePositiveFeedback = function() {
-  console.log('hey you got it right!');
   return `<section class="correctResult">
             <h2>Correct!</h2>
-           </section>
+          </section>
           <section class="answerReult">
             <p class="currentScore">Current Score: ${STORE.score} out of 5 Correct</p>
           </section>
           <section class="submitbutton">
               <button type="submit" class="js-next">Next Question</button>
           </section>`;
-}
+};
 
 const generateNegativeFeedback = function () {
-  console.log('whoops the answer was wrong')
   return `<section class="wrongResult">
             <h2>Sorry, that was incorrect.</h2>
           </section>
@@ -128,10 +113,9 @@ const generateNegativeFeedback = function () {
           <section class="submitbutton">
             <button type="submit" class="js-next">Next Question</button>
           </section>`;
-}
+};
 
 const endScreen = function () {
-  console.log('the end is ny');
   return `<section>
               <h2>Congratulations, you've completed the quiz!</h2>
               <h3>Final Score ${STORE.score} out of 5 correct</h3>
@@ -143,7 +127,7 @@ const endScreen = function () {
           <section class="submitbutton">
               <button type="submit" class="js-restart">Restart Quiz</button>
           </section>`
-}
+};
 
 function handleStartButton () {
   //listens for when start button is clicked, looks for first question and runs generateAnswerChoices to show first Q
@@ -152,8 +136,7 @@ function handleStartButton () {
       STORE.quizState = 'question';
       renderQuiz();
   });
-  console.log ('yay your handlestartfunction function is a function!');
- }
+ };
 
 function handleChoiceSumbit () {
   //listens for when option is selected and submit button is clicked, loads appropriate correct/incorrect content, tallies up score
@@ -170,9 +153,8 @@ function handleChoiceSumbit () {
       console.log(STORE.quizState);
       renderQuiz();
     }
-    })
-  
- }
+    });
+ };
 
 function handleNextButton () {
   //listens for when next button is clicked on the correct/incorrect states, changes question number, changes state back to question
@@ -191,28 +173,27 @@ function handleNextButton () {
       renderQuiz(); 
     }
   });
-}
+};
 
 function handleRestart () {
-  //listens for when last page is loaded and the restart button is selected, loads landing pg
+  //listens for when last page is loaded and the restart button is selected, resets score/quesion num/state
   $('main').on('click', '.js-restart', event => {
     event.preventDefault();
     STORE.questionNumber = 0;
     STORE.score = 0;
     STORE.quizState = 'start';
     renderQuiz();
-  })
-  console.log ('yay your handlerestart function is a function!');
-}
+  });
+};
 
 function renderQuiz () {
   if (STORE.quizState === 'end') {
-    const quizEnd = endScreen();
-    $('main').html(quizEnd);
+      const quizEnd = endScreen();
+      $('main').html(quizEnd);
   } 
   else if (STORE.quizState === 'start') {
       const begin = welcomeScreen();
-        $('main').html(begin);
+      $('main').html(begin);
   }
   else if (STORE.quizState === 'question') {
       const currentQuestion = generateQuestion(STORE.questions[STORE.questionNumber]);
